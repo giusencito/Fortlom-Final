@@ -1,0 +1,110 @@
+<app-ArtistNavegation></app-ArtistNavegation>
+
+<div class ="padding"></div>
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>Make a Event!</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image class="image" src="https://www.eventindustryshow.com/img/blog/Trabalhar-em-Eventos-11.jpg" alt="Photo of a Event">
+  <mat-card-actions>
+    <div class ="buttonspacer">
+    <button mat-raised-button class ="button" (click) = "ShowFormEvent()" >Post Event</button>
+    </div>
+  </mat-card-actions>
+</mat-card>
+<div class ="padding"></div>
+<div *ngIf = "showformevent">
+  <mat-card class="example-form-card">
+    <mat-card-header>
+      <mat-card-title>Create your Event!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #EventForm='ngForm'>
+        <mat-form-field>
+          <input matInput placeholder="EventName" name="EventName" required
+          [(ngModel)]="eventdata.eventName">
+            <mat-error>Es requerido</mat-error>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <mat-form-field>
+          <input matInput placeholder="EventDescription" name="EventDescription" required
+            [(ngModel)]="eventdata.eventDescription">
+            <mat-error>Es requerido</mat-error>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <mat-form-field>
+          <input type = "number" matInput placeholder="Likes" name="Likes" required
+            [(ngModel)]="eventdata.likes">
+            <mat-error>Es requerido</mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click) = "NotShowFormEvent()">Cancel</button>
+      <button mat-button (click) = "ClearForm()">Clean</button>
+      <button mat-button (click) = "addEvent()" (click) = "NotShowFormEvent()">Create and Post</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class ="padding"></div>
+  <table>
+    <tr>
+    <td>
+    <div class = "centerbuttons">
+    <button mat-raised-button class = "buttonShow" (click) = "ShowEventsArtist()">Show All Events</button>
+    </div>
+    </td>
+    <td>
+    <div class = "centerbuttons">
+      <button mat-raised-button class = "buttonShow" (click) = "NotShowEventsArtist()">Not Show Events</button>
+    </div>
+    </td>
+    </tr>
+  </table>
+<div class ="padding"></div>
+<div *ngIf = "showeventartist">
+  <mat-grid-list cols="1" rowHeight="1:0.5">
+    <mat-grid-tile *ngFor ="let arr of arrayevents" class="spaceshort">
+        <mat-card class="example-card-event">
+          <mat-card-header  *ngFor ="let arr2 of arrayusers">
+            <div *ngIf = "arr.artist.id == arr2.id">
+              <table class = "table">
+                <tr>
+                  <td class = "withoutborder">
+                  <div mat-card-avatar class="example-header-image"></div>
+                  </td>
+                  <td class = "withoutborder">
+                  <h1>{{arr2.name}}</h1>
+                  </td>
+                  <td class = "withoutborder">
+                  <h1>{{arr2.lastName}}</h1>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-card-title><h1>{{arr.eventName}}</h1></mat-card-title>
+            <p>{{arr.eventDescription}}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <table>
+              <tr>
+                <td>
+                <div class = "buttonspacer">
+                <button mat-button (click) = "Increasinglikes(arr.id)"><mat-icon aria-label="Example thumb_up icon">
+                    thumb_up
+                </mat-icon></button>
+                </div>
+                </td>
+                <td>
+                  <div class = "minipadding"></div>
+                  <p>{{arr.likes}}</p>
+                </td>
+              </tr>
+            </table>
+          </mat-card-actions>
+        </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
